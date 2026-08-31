@@ -97,7 +97,7 @@ export function FabricDnaPanel({
           <div>
             <p className="text-[13px] font-bold text-foreground">Working-Pro Guarantee</p>
             <ul className="mt-0.5 space-y-0.5 text-[12px] text-muted-foreground">
-              <li>• 7-Day Instant Refunds</li>
+              <li>• Instant Doorstep Refunds (7-Day Window)</li>
               <li>• Guaranteed 7-10 PM / Weekend Pickups</li>
             </ul>
           </div>
