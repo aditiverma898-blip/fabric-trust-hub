@@ -49,7 +49,7 @@ const collections: { label: string; category: Product["category"] }[] = [
 ];
 
 function Wishlist() {
-  const [expandedId, setExpandedId] = useState<string | null>("prd_1");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [bag, setBag] = useState(0);
 
   const items = wishlistItems
