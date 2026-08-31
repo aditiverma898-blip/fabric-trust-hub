@@ -40,7 +40,7 @@ export function WishlistCard({
   onMoveToBag,
 }: {
   product: Product;
-  dna?: FabricDNA;
+  dna?: FabricDNA | undefined;
   expanded: boolean;
   onToggle: () => void;
   onMoveToBag: () => void;
