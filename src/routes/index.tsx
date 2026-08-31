@@ -59,7 +59,13 @@ function Wishlist() {
   return (
     <div className="mx-auto min-h-screen max-w-md bg-background pb-20 font-sans">
       <header className="sticky top-0 z-20 flex items-center gap-3 border-b border-border bg-card px-4 py-3">
-        <ArrowLeft className="h-5 w-5 text-foreground" />
+        <button
+          onClick={() => setExpandedId(null)}
+          aria-label="Back to wishlist"
+          className="flex items-center"
+        >
+          <ArrowLeft className="h-5 w-5 text-foreground" />
+        </button>
         <div className="flex-1">
           <h1 className="text-[19px] font-bold leading-tight text-foreground">Wishlist</h1>
           <p className="text-[13px] text-muted-foreground">{items.length} items</p>
