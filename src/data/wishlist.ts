@@ -31,6 +31,8 @@ export type FabricDNA = {
   /** display-only blurb for the score */
   fabricSummary?: string;
   studioPhotoCount?: number;
+  /** per-product fabric metrics, 0-100 */
+  fabricStats?: { label: string; value: number }[];
 };
 
 export type WishlistItem = {
@@ -100,6 +102,11 @@ export const fabricDnaRecords: FabricDNA[] = [
     workingProGuaranteeEligible: true,
     fabricSummary: "AI Verified Cotton Blend",
     studioPhotoCount: 12,
+    fabricStats: [
+      { label: "Breathability", value: 92 },
+      { label: "Softness", value: 88 },
+      { label: "Durability", value: 76 },
+    ],
   },
   {
     id: "fdna_2",
@@ -109,6 +116,11 @@ export const fabricDnaRecords: FabricDNA[] = [
     workingProGuaranteeEligible: true,
     fabricSummary: "AI Verified Cotton Twill",
     studioPhotoCount: 8,
+    fabricStats: [
+      { label: "Breathability", value: 81 },
+      { label: "Softness", value: 84 },
+      { label: "Durability", value: 90 },
+    ],
   },
   {
     id: "fdna_3",
@@ -118,6 +130,11 @@ export const fabricDnaRecords: FabricDNA[] = [
     workingProGuaranteeEligible: false,
     fabricSummary: "AI Verified Heavy Denim",
     studioPhotoCount: 5,
+    fabricStats: [
+      { label: "Breathability", value: 64 },
+      { label: "Softness", value: 58 },
+      { label: "Durability", value: 96 },
+    ],
   },
   {
     id: "fdna_4",
@@ -127,6 +144,11 @@ export const fabricDnaRecords: FabricDNA[] = [
     workingProGuaranteeEligible: true,
     fabricSummary: "AI Verified Poly-Cotton",
     studioPhotoCount: 9,
+    fabricStats: [
+      { label: "Breathability", value: 74 },
+      { label: "Softness", value: 90 },
+      { label: "Durability", value: 82 },
+    ],
   },
 ];
 
