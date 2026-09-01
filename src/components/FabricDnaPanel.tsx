@@ -53,12 +53,14 @@ export function FabricDnaPanel({
           Studio Proof{" "}
           <span className="font-normal text-muted-foreground">(Real fits)</span>
         </p>
-        <div className="grid grid-cols-3 gap-2">
+        <div
+          className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth"
+        >
           {dna.studioImageUrls.map((url, i) => (
             <button
               key={i}
               onClick={() => setLightboxIndex(i)}
-              className="relative aspect-square overflow-hidden rounded-md transition-transform active:scale-95"
+              className="relative aspect-square w-[78%] shrink-0 snap-start overflow-hidden rounded-lg transition-transform active:scale-95"
               aria-label={`View verified user photo ${i + 1}`}
             >
               <img
@@ -67,7 +69,7 @@ export function FabricDnaPanel({
                 loading="lazy"
                 className="h-full w-full object-cover"
               />
-              {i === 2 && extra > 0 && (
+              {i === dna.studioImageUrls.length - 1 && extra > 0 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-foreground/55 text-[13px] font-bold text-background">
                   +{extra}
                 </div>
