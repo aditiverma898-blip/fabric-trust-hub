@@ -58,30 +58,34 @@ export function FabricDnaPanel({
           Studio Proof{" "}
           <span className="font-normal text-muted-foreground">(Real fits)</span>
         </p>
-        <div
-          className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth"
+        <button
+          onClick={() => setShowReel(true)}
+          className="relative flex w-full items-center gap-3 overflow-hidden rounded-xl border border-border bg-card transition-transform active:scale-[0.98]"
+          aria-label="Open Studio Proof photo feed"
         >
-          {dna.studioImageUrls.map((url, i) => (
-            <button
-              key={i}
-              onClick={() => setLightboxIndex(i)}
-              className="relative aspect-square w-[78%] shrink-0 snap-start overflow-hidden rounded-lg transition-transform active:scale-95"
-              aria-label={`View verified user photo ${i + 1}`}
-            >
-              <img
-                src={url}
-                alt={`Unedited creator photo ${i + 1}`}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-              {i === dna.studioImageUrls.length - 1 && extra > 0 && (
-                <div className="absolute inset-0 flex items-center justify-center bg-foreground/55 text-[13px] font-bold text-background">
-                  +{extra}
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden">
+            <img
+              src={photos[0]}
+              alt="Studio Proof preview"
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-foreground/35">
+              <Images className="h-6 w-6 text-card" />
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col items-start text-left">
+            <span className="text-[13px] font-bold text-foreground">
+              {photos.length} real-fit photos
+            </span>
+            <span className="text-[12px] text-muted-foreground">
+              Tap to view as a vertical feed
+            </span>
+          </div>
+          <div className="mr-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary">
+            <Images className="h-[18px] w-[18px] text-primary-foreground" />
+          </div>
+        </button>
       </div>
 
       {dna.fabricStats && (
