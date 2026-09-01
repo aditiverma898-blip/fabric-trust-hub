@@ -43,6 +43,40 @@ export function FabricDnaPanel({
         </div>
       </div>
 
+      <p className="flex items-start gap-1.5 rounded-md bg-accent/60 px-2.5 py-1.5 text-[11px] font-medium leading-tight text-muted-foreground">
+        <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-primary" />
+        FabricDNA scores are AI-distilled from verified buyer reviews.
+      </p>
+
+      <div>
+        <p className="mb-2 text-[13px] font-bold text-foreground">
+          Studio Proof{" "}
+          <span className="font-normal text-muted-foreground">(Real fits)</span>
+        </p>
+        <div className="grid grid-cols-3 gap-2">
+          {dna.studioImageUrls.map((url, i) => (
+            <button
+              key={i}
+              onClick={() => setLightboxIndex(i)}
+              className="relative aspect-square overflow-hidden rounded-md transition-transform active:scale-95"
+              aria-label={`View verified user photo ${i + 1}`}
+            >
+              <img
+                src={url}
+                alt={`Unedited creator photo ${i + 1}`}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              {i === 2 && extra > 0 && (
+                <div className="absolute inset-0 flex items-center justify-center bg-foreground/55 text-[13px] font-bold text-background">
+                  +{extra}
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {dna.fabricStats && (
         <div className="space-y-2 rounded-lg bg-panel px-3 py-3">
           {dna.fabricStats.map((stat) => (
@@ -61,35 +95,6 @@ export function FabricDnaPanel({
           ))}
         </div>
       )}
-
-      <div>
-        <p className="mb-2 text-[13px] font-bold text-foreground">
-          Studio Proof{" "}
-          <span className="font-normal text-muted-foreground">(Real fits)</span>
-        </p>
-        <div className="flex gap-2">
-          {dna.studioImageUrls.map((url, i) => (
-            <button
-              key={i}
-              onClick={() => setLightboxIndex(i)}
-              className="relative h-16 w-20 overflow-hidden rounded-md transition-transform active:scale-95"
-              aria-label={`View verified user photo ${i + 1}`}
-            >
-              <img
-                src={url}
-                alt={`Unedited creator photo ${i + 1}`}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-              {i === 2 && extra > 0 && (
-                <div className="absolute inset-0 flex items-center justify-center bg-foreground/55 text-[13px] font-bold text-background">
-                  +{extra}
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {dna.workingProGuaranteeEligible ? (
         <div className="flex gap-2.5 rounded-lg border border-primary/25 bg-accent px-3 py-2.5">
