@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BadgeCheck, Check, ShoppingBag, Sparkles, X } from "lucide-react";
+import { BadgeCheck, Check, Images, ShoppingBag, Sparkles, X } from "lucide-react";
 import type { FabricDNA } from "@/data/wishlist";
 
 export function FabricDnaPanel({
@@ -9,8 +9,8 @@ export function FabricDnaPanel({
   dna: FabricDNA;
   onMoveToBag: () => void;
 }) {
-  const extra = (dna.studioPhotoCount ?? 3) - 3;
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const photos = dna.studioImageUrls;
+  const [showReel, setShowReel] = useState(false);
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
@@ -20,11 +20,16 @@ export function FabricDnaPanel({
   }, [added]);
 
   useEffect(() => {
-    if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLightboxIndex(null);
+    if (!showReel) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setShowReel(false);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightboxIndex]);
+    // lock body scroll while the reel is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [showReel]);
 
   const handleMoveToBag = () => {
     onMoveToBag();
