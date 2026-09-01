@@ -124,10 +124,6 @@ function Wishlist() {
         ))}
       </div>
 
-      <p className="flex items-center justify-center gap-1.5 px-4 py-6 text-[12px] text-muted-foreground">
-        <Sparkles className="h-3.5 w-3.5 text-primary" />
-        FabricDNA scores are AI-distilled from verified buyer reviews.
-      </p>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-md justify-around border-t border-border bg-card py-2">
         {[
