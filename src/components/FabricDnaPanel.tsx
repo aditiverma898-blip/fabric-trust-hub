@@ -144,30 +144,40 @@ export function FabricDnaPanel({
         )}
       </button>
 
-      {lightboxIndex !== null && (
+      {showReel && (
         <div
-          className="animate-fade-in fixed inset-0 z-50 flex flex-col items-center justify-center bg-foreground/90 p-6"
-          onClick={() => setLightboxIndex(null)}
+          className="animate-fade-in fixed inset-0 z-50 bg-black"
           role="dialog"
           aria-modal="true"
         >
           <button
             aria-label="Close"
-            onClick={() => setLightboxIndex(null)}
-            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-card/20 text-card transition-colors hover:bg-card/30"
+            onClick={() => setShowReel(false)}
+            className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
           >
             <X className="h-5 w-5" />
           </button>
-          <img
-            src={dna.studioImageUrls[lightboxIndex]}
-            alt={`Verified user photo ${lightboxIndex + 1}`}
-            onClick={(e) => e.stopPropagation()}
-            className="animate-scale-in max-h-[75vh] w-auto max-w-full rounded-lg object-contain"
-          />
-          <p className="mt-3 flex items-center gap-1.5 text-[13px] font-semibold text-card">
-            <BadgeCheck className="h-4 w-4 text-success" />
-            Verified user photo
-          </p>
+
+          <div className="no-scrollbar flex h-full w-full snap-y snap-mandatory flex-col overflow-y-auto scroll-smooth">
+            {photos.map((url, i) => (
+              <div
+                key={i}
+                className="relative flex h-full w-full shrink-0 snap-start snap-always items-center justify-center"
+              >
+                <img
+                  src={url}
+                  alt={`Verified user photo ${i + 1}`}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent px-4 pb-6 pt-10">
+                  <BadgeCheck className="h-4 w-4 text-success" />
+                  <span className="text-[13px] font-semibold text-white">
+                    Verified user photo · {i + 1}/{photos.length}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
