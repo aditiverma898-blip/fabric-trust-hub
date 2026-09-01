@@ -5,6 +5,8 @@ import p4 from "@/assets/p4-black-shirt.jpg";
 import s1 from "@/assets/s1.jpg";
 import s2 from "@/assets/s2.jpg";
 import s3 from "@/assets/s3.jpg";
+import s4 from "@/assets/s4.jpg";
+import s5 from "@/assets/s5.jpg";
 
 export type Product = {
   id: string;
@@ -25,8 +27,8 @@ export type FabricDNA = {
   productId: string;
   /** 0-100 */
   truthScore: number;
-  /** exactly 3 unedited creator photos */
-  studioImageUrls: [string, string, string];
+  /** unedited creator photos shown in the vertical Studio Proof feed */
+  studioImageUrls: string[];
   workingProGuaranteeEligible: boolean;
   /** display-only blurb for the score */
   fabricSummary?: string;
@@ -98,7 +100,7 @@ export const fabricDnaRecords: FabricDNA[] = [
     id: "fdna_1",
     productId: "prd_1",
     truthScore: 92,
-    studioImageUrls: [s1, s2, s3],
+    studioImageUrls: [s1, s2, s3, s4, s5],
     workingProGuaranteeEligible: true,
     fabricSummary: "AI Verified Cotton Blend",
     studioPhotoCount: 12,
@@ -112,7 +114,7 @@ export const fabricDnaRecords: FabricDNA[] = [
     id: "fdna_2",
     productId: "prd_2",
     truthScore: 87,
-    studioImageUrls: [s2, s3, s1],
+    studioImageUrls: [s2, s3, s1, s5, s4],
     workingProGuaranteeEligible: true,
     fabricSummary: "AI Verified Cotton Twill",
     studioPhotoCount: 8,
@@ -126,7 +128,7 @@ export const fabricDnaRecords: FabricDNA[] = [
     id: "fdna_3",
     productId: "prd_3",
     truthScore: 78,
-    studioImageUrls: [s3, s1, s2],
+    studioImageUrls: [s3, s1, s2, s4, s5],
     workingProGuaranteeEligible: false,
     fabricSummary: "AI Verified Heavy Denim",
     studioPhotoCount: 5,
@@ -140,7 +142,7 @@ export const fabricDnaRecords: FabricDNA[] = [
     id: "fdna_4",
     productId: "prd_4",
     truthScore: 84,
-    studioImageUrls: [s1, s3, s2],
+    studioImageUrls: [s1, s3, s2, s5, s4],
     workingProGuaranteeEligible: true,
     fabricSummary: "AI Verified Poly-Cotton",
     studioPhotoCount: 9,

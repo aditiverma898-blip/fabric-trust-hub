@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BadgeCheck, Check, ShoppingBag, Sparkles, X } from "lucide-react";
+import { BadgeCheck, Check, Images, ShoppingBag, Sparkles, X } from "lucide-react";
 import type { FabricDNA } from "@/data/wishlist";
 
 export function FabricDnaPanel({
@@ -9,8 +9,8 @@ export function FabricDnaPanel({
   dna: FabricDNA;
   onMoveToBag: () => void;
 }) {
-  const extra = (dna.studioPhotoCount ?? 3) - 3;
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const photos = dna.studioImageUrls;
+  const [showReel, setShowReel] = useState(false);
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
@@ -20,11 +20,16 @@ export function FabricDnaPanel({
   }, [added]);
 
   useEffect(() => {
-    if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLightboxIndex(null);
+    if (!showReel) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setShowReel(false);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightboxIndex]);
+    // lock body scroll while the reel is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [showReel]);
 
   const handleMoveToBag = () => {
     onMoveToBag();
@@ -53,30 +58,34 @@ export function FabricDnaPanel({
           Studio Proof{" "}
           <span className="font-normal text-muted-foreground">(Real fits)</span>
         </p>
-        <div
-          className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth"
+        <button
+          onClick={() => setShowReel(true)}
+          className="relative flex w-full items-center gap-3 overflow-hidden rounded-xl border border-border bg-card transition-transform active:scale-[0.98]"
+          aria-label="Open Studio Proof photo feed"
         >
-          {dna.studioImageUrls.map((url, i) => (
-            <button
-              key={i}
-              onClick={() => setLightboxIndex(i)}
-              className="relative aspect-square w-[78%] shrink-0 snap-start overflow-hidden rounded-lg transition-transform active:scale-95"
-              aria-label={`View verified user photo ${i + 1}`}
-            >
-              <img
-                src={url}
-                alt={`Unedited creator photo ${i + 1}`}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-              {i === dna.studioImageUrls.length - 1 && extra > 0 && (
-                <div className="absolute inset-0 flex items-center justify-center bg-foreground/55 text-[13px] font-bold text-background">
-                  +{extra}
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden">
+            <img
+              src={photos[0]}
+              alt="Studio Proof preview"
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-foreground/35">
+              <Images className="h-6 w-6 text-card" />
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col items-start text-left">
+            <span className="text-[13px] font-bold text-foreground">
+              {photos.length} real-fit photos
+            </span>
+            <span className="text-[12px] text-muted-foreground">
+              Tap to view as a vertical feed
+            </span>
+          </div>
+          <div className="mr-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary">
+            <Images className="h-[18px] w-[18px] text-primary-foreground" />
+          </div>
+        </button>
       </div>
 
       {dna.fabricStats && (
@@ -135,30 +144,40 @@ export function FabricDnaPanel({
         )}
       </button>
 
-      {lightboxIndex !== null && (
+      {showReel && (
         <div
-          className="animate-fade-in fixed inset-0 z-50 flex flex-col items-center justify-center bg-foreground/90 p-6"
-          onClick={() => setLightboxIndex(null)}
+          className="animate-fade-in fixed inset-0 z-50 bg-black"
           role="dialog"
           aria-modal="true"
         >
           <button
             aria-label="Close"
-            onClick={() => setLightboxIndex(null)}
-            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-card/20 text-card transition-colors hover:bg-card/30"
+            onClick={() => setShowReel(false)}
+            className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
           >
             <X className="h-5 w-5" />
           </button>
-          <img
-            src={dna.studioImageUrls[lightboxIndex]}
-            alt={`Verified user photo ${lightboxIndex + 1}`}
-            onClick={(e) => e.stopPropagation()}
-            className="animate-scale-in max-h-[75vh] w-auto max-w-full rounded-lg object-contain"
-          />
-          <p className="mt-3 flex items-center gap-1.5 text-[13px] font-semibold text-card">
-            <BadgeCheck className="h-4 w-4 text-success" />
-            Verified user photo
-          </p>
+
+          <div className="no-scrollbar flex h-full w-full snap-y snap-mandatory flex-col overflow-y-auto scroll-smooth">
+            {photos.map((url, i) => (
+              <div
+                key={i}
+                className="relative flex h-full w-full shrink-0 snap-start snap-always items-center justify-center"
+              >
+                <img
+                  src={url}
+                  alt={`Verified user photo ${i + 1}`}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent px-4 pb-6 pt-10">
+                  <BadgeCheck className="h-4 w-4 text-success" />
+                  <span className="text-[13px] font-semibold text-white">
+                    Verified user photo · {i + 1}/{photos.length}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
