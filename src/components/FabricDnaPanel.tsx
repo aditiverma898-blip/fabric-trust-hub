@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BadgeCheck, Check, ShoppingBag, X } from "lucide-react";
+import { BadgeCheck, Check, ShoppingBag, Sparkles, X } from "lucide-react";
 import type { FabricDNA } from "@/data/wishlist";
 
 export function FabricDnaPanel({
