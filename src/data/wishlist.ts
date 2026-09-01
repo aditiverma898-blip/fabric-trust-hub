@@ -5,6 +5,8 @@ import p4 from "@/assets/p4-black-shirt.jpg";
 import s1 from "@/assets/s1.jpg";
 import s2 from "@/assets/s2.jpg";
 import s3 from "@/assets/s3.jpg";
+import s4 from "@/assets/s4.jpg";
+import s5 from "@/assets/s5.jpg";
 
 export type Product = {
   id: string;
@@ -25,8 +27,8 @@ export type FabricDNA = {
   productId: string;
   /** 0-100 */
   truthScore: number;
-  /** exactly 3 unedited creator photos */
-  studioImageUrls: [string, string, string];
+  /** unedited creator photos shown in the vertical Studio Proof feed */
+  studioImageUrls: string[];
   workingProGuaranteeEligible: boolean;
   /** display-only blurb for the score */
   fabricSummary?: string;
