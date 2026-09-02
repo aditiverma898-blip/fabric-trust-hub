@@ -31,6 +31,9 @@ type ShopContextValue = {
   removeFromBag: (bagItemId: string) => void;
   updateBagItem: (bagItemId: string, patch: Partial<BagItem>) => void;
   removeFromWishlist: (productId: string, itemName: string) => void;
+  sizeDrawerProductId: string | null;
+  openSizeDrawer: (productId: string) => void;
+  closeSizeDrawer: () => void;
 };
 
 const ShopContext = createContext<ShopContextValue | null>(null);
@@ -39,6 +42,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = useState<WishlistItem[]>(initialWishlist);
   const [bag, setBag] = useState<BagItem[]>([]);
   const [toast, setToast] = useState<ToastState | null>(null);
+  const [sizeDrawerProductId, setSizeDrawerProductId] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const dismissToast = useCallback(() => setToast(null), []);
@@ -111,6 +115,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     [showToast],
   );
 
+  const openSizeDrawer = useCallback((productId: string) => setSizeDrawerProductId(productId), []);
+  const closeSizeDrawer = useCallback(() => setSizeDrawerProductId(null), []);
+
   const value = useMemo(
     () => ({
       wishlist,
@@ -122,6 +129,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       removeFromBag,
       updateBagItem,
       removeFromWishlist,
+      sizeDrawerProductId,
+      openSizeDrawer,
+      closeSizeDrawer,
     }),
     [
       wishlist,
@@ -133,6 +143,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       removeFromBag,
       updateBagItem,
       removeFromWishlist,
+      sizeDrawerProductId,
+      openSizeDrawer,
+      closeSizeDrawer,
     ],
   );
 

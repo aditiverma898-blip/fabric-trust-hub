@@ -18,7 +18,7 @@ function Price({ product }: { product: Product }) {
 }
 
 function RowActions({ product }: { product: Product }) {
-  const { removeFromWishlist, showToast } = useShop();
+  const { removeFromWishlist, showToast, openSizeDrawer } = useShop();
 
   const handleShare = async () => {
     const url = `https://www.myntra.com/p/${product.id}`;
@@ -53,7 +53,7 @@ function RowActions({ product }: { product: Product }) {
         <Trash2 className="h-[18px] w-[18px] text-foreground" />
       </button>
       <button
-        onClick={() => window.dispatchEvent(new CustomEvent("open-size-drawer", { detail: product.id }))}
+        onClick={() => openSizeDrawer(product.id)}
         className="flex items-center justify-center gap-1.5 py-2.5 text-[14px] font-bold text-primary"
       >
         <ShoppingBag className="h-[18px] w-[18px]" /> Add
