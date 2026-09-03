@@ -148,17 +148,28 @@ function Wishlist() {
           { icon: Sparkles, label: "Studio" },
           { icon: Search, label: "Explore" },
           { icon: ShoppingBag, label: "Bag", active: true },
-        ].map(({ icon: Icon, label, active }) => (
-          <div
-            key={label}
-            className={`flex w-16 flex-col items-center gap-0.5 text-[11px] ${
-              active ? "text-primary" : "text-foreground"
-            }`}
-          >
-            <Icon className="h-5 w-5" />
-            {label}
-          </div>
-        ))}
+        ].map(({ icon: Icon, label, active }) =>
+          label === "Bag" ? (
+            <Link
+              key={label}
+              to="/bag"
+              className="flex w-16 flex-col items-center gap-0.5 text-[11px] text-primary"
+            >
+              <Icon className="h-5 w-5" />
+              {label}
+            </Link>
+          ) : (
+            <div
+              key={label}
+              className={`flex w-16 flex-col items-center gap-0.5 text-[11px] ${
+                active ? "text-primary" : "text-foreground"
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+              {label}
+            </div>
+          ),
+        )}
       </nav>
       <Compass className="hidden" />
     </div>
