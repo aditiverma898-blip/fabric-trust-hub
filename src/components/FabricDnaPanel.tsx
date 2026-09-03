@@ -4,12 +4,16 @@ import type { FabricDNA } from "@/data/wishlist";
 
 export function FabricDnaPanel({
   dna,
+  coverImage,
   onMoveToBag,
 }: {
   dna: FabricDNA;
+  coverImage?: string;
   onMoveToBag: () => void;
 }) {
-  const photos = dna.studioImageUrls;
+  const photos = coverImage
+    ? [coverImage, ...dna.studioImageUrls.slice(0, 4)]
+    : dna.studioImageUrls;
   const [showReel, setShowReel] = useState(false);
   const [added, setAdded] = useState(false);
 
