@@ -55,7 +55,8 @@ export function FabricDnaPanel({
       </p>
 
       {dna.purchaseComparison && (
-        <div className="rounded-lg border border-primary/25 bg-primary/5 p-3">
+        <div className="space-y-3 rounded-lg border border-primary/25 bg-primary/5 p-3">
+          {/* Comparison */}
           <div className="flex items-start gap-3">
             <div className="relative flex h-16 w-20 shrink-0">
               <img
@@ -76,6 +77,33 @@ export function FabricDnaPanel({
               </p>
               <p className="mt-1.5 text-[12px] leading-tight text-muted-foreground">
                 {dna.purchaseComparison.text}
+              </p>
+            </div>
+          </div>
+
+          <div className="h-px bg-primary/15" />
+
+          {/* Styling Suggestion */}
+          <div className="flex items-start gap-3">
+            <div className="relative flex h-16 w-20 shrink-0">
+              <img
+                src={dna.purchaseComparison.stylingProductImage}
+                alt="Styling suggestion"
+                className="absolute left-0 top-0 h-16 w-12 rounded-md border-2 border-card object-cover shadow-sm"
+              />
+              <img
+                src={coverImage}
+                alt="Current item"
+                className="absolute left-7 top-0 z-10 h-16 w-12 rounded-md border-2 border-card object-cover shadow-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <p className="flex items-center gap-1.5 text-[12px] font-bold leading-tight text-foreground">
+                <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary" />
+                Wardrobe Synergy
+              </p>
+              <p className="mt-1.5 text-[12px] leading-tight text-muted-foreground">
+                {dna.purchaseComparison.stylingSuggestion}
               </p>
             </div>
           </div>
