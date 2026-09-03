@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowLeft,
@@ -15,10 +15,11 @@ import {
 import {
   getFabricDna,
   getProduct,
-  wishlistItems,
   type Product,
 } from "@/data/wishlist";
 import { WishlistCard } from "@/components/WishlistCard";
+import { SizeDrawer } from "@/components/SizeDrawer";
+import { useShop } from "@/context/ShopContext";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,11 +51,14 @@ const collections: { label: string; category: Product["category"] }[] = [
 
 function Wishlist() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [bag, setBag] = useState(0);
+  const { wishlist, bag, addToBag, sizeDrawerProductId, closeSizeDrawer } = useShop();
 
-  const items = wishlistItems
+  const items = wishlist
     .map((w) => ({ item: w, product: getProduct(w.productId)!, dna: getFabricDna(w.productId) }))
     .filter((r) => r.product);
+
+  const bagCount = bag.reduce((n, b) => n + b.qty, 0);
+  const drawerProduct = sizeDrawerProductId ? getProduct(sizeDrawerProductId) : undefined;
 
   return (
     <div className="mx-auto min-h-screen max-w-md bg-background pb-20 font-sans">
@@ -71,14 +75,14 @@ function Wishlist() {
           <p className="text-[13px] text-muted-foreground">{items.length} items</p>
         </div>
         <ListFilter className="h-5 w-5 text-foreground" />
-        <div className="relative">
+        <Link to="/bag" aria-label="Open bag" className="relative">
           <ShoppingBag className="h-5 w-5 text-foreground" />
-          {bag > 0 && (
+          {bagCount > 0 && (
             <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
-              {bag}
+              {bagCount}
             </span>
           )}
-        </div>
+        </Link>
       </header>
 
       <div className="flex gap-3 px-4 py-3">
@@ -119,10 +123,22 @@ function Wishlist() {
             dna={dna}
             expanded={expandedId === product.id}
             onToggle={() => setExpandedId(expandedId === product.id ? null : product.id)}
-            onMoveToBag={() => setBag((b) => b + 1)}
+            onMoveToBag={() => addToBag(product.id, product.sizes[1] ?? product.sizes[0]!)}
           />
         ))}
       </div>
+
+      {drawerProduct ? (
+        <SizeDrawer
+          product={drawerProduct}
+          onClose={closeSizeDrawer}
+          onAddToBag={(size) => {
+            addToBag(drawerProduct.id, size);
+            closeSizeDrawer();
+          }}
+        />
+      ) : null}
+
 
 
       <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-md justify-around border-t border-border bg-card py-2">
@@ -132,17 +148,28 @@ function Wishlist() {
           { icon: Sparkles, label: "Studio" },
           { icon: Search, label: "Explore" },
           { icon: ShoppingBag, label: "Bag", active: true },
-        ].map(({ icon: Icon, label, active }) => (
-          <div
-            key={label}
-            className={`flex w-16 flex-col items-center gap-0.5 text-[11px] ${
-              active ? "text-primary" : "text-foreground"
-            }`}
-          >
-            <Icon className="h-5 w-5" />
-            {label}
-          </div>
-        ))}
+        ].map(({ icon: Icon, label, active }) =>
+          label === "Bag" ? (
+            <Link
+              key={label}
+              to="/bag"
+              className="flex w-16 flex-col items-center gap-0.5 text-[11px] text-primary"
+            >
+              <Icon className="h-5 w-5" />
+              {label}
+            </Link>
+          ) : (
+            <div
+              key={label}
+              className={`flex w-16 flex-col items-center gap-0.5 text-[11px] ${
+                active ? "text-primary" : "text-foreground"
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+              {label}
+            </div>
+          ),
+        )}
       </nav>
       <Compass className="hidden" />
     </div>
