@@ -38,8 +38,6 @@ export type FabricDNA = {
     previousProduct: string;
     text: string;
     previousProductImage: string;
-    stylingSuggestion: string;
-    stylingProductImage: string;
   };
 };
 
@@ -172,10 +170,8 @@ export const fabricDnaRecords: FabricDNA[] = [
     ],
     purchaseComparison: {
       previousProduct: "H&M Cotton Polo (May '25)",
-      text: "This fabric is 15% softer but slightly less breathable.",
+      text: "This fabric is 15% softer but slightly less breathable. It will look great paired with the white trousers you bought in July 2024.",
       previousProductImage: "https://picsum.photos/seed/polo/200/300",
-      stylingSuggestion: "This will look great paired with the white trousers you bought in July 2024.",
-      stylingProductImage: "https://picsum.photos/seed/trousers/200/300",
     },
   },
   {
@@ -193,10 +189,8 @@ export const fabricDnaRecords: FabricDNA[] = [
     ],
     purchaseComparison: {
       previousProduct: "Highlander Casual Shirt (Dec '24)",
-      text: "This cotton twill is noticeably heavier and more durable.",
+      text: "This cotton twill is noticeably heavier and more durable. This pattern perfectly complements the black denim jeans you bought last winter.",
       previousProductImage: "https://picsum.photos/seed/shirt2/200/300",
-      stylingSuggestion: "This pattern perfectly complements the black denim jeans you bought last winter.",
-      stylingProductImage: "https://picsum.photos/seed/jeans/200/300",
     },
   },
   {
@@ -214,10 +208,8 @@ export const fabricDnaRecords: FabricDNA[] = [
     ],
     purchaseComparison: {
       previousProduct: "Levi's Trucker Jacket (Aug '24)",
-      text: "This denim is roughly 20% thicker and stiffer.",
+      text: "This denim is roughly 20% thicker and stiffer. It is the perfect layering piece over your white essential t-shirt.",
       previousProductImage: "https://picsum.photos/seed/jacket2/200/300",
-      stylingSuggestion: "This jacket is the perfect layering piece over your white essential t-shirt.",
-      stylingProductImage: "https://picsum.photos/seed/tshirt/200/300",
     },
   },
   {
@@ -235,10 +227,8 @@ export const fabricDnaRecords: FabricDNA[] = [
     ],
     purchaseComparison: {
       previousProduct: "Peter England Formal (Oct '25)",
-      text: "This fabric has significantly more stretch and give.",
+      text: "This fabric has significantly more stretch and give. This sharp black shirt pairs seamlessly with the grey chinos you bought last month.",
       previousProductImage: "https://picsum.photos/seed/shirt3/200/300",
-      stylingSuggestion: "This sharp black shirt pairs seamlessly with the grey chinos you bought last month.",
-      stylingProductImage: "https://picsum.photos/seed/chinos/200/300",
     },
   },
 ];
