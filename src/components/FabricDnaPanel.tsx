@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BadgeCheck, Check, Images, ShoppingBag, Sparkles, X } from "lucide-react";
+import { BadgeCheck, Check, Images, ShoppingBag, Sparkles, X, Scale } from "lucide-react";
 import type { FabricDNA } from "@/data/wishlist";
 
 export function FabricDnaPanel({
@@ -35,7 +35,6 @@ export function FabricDnaPanel({
 
   const handleMoveToBag = () => {
     onMoveToBag();
-    setAdded(true);
   };
 
   return (
@@ -54,6 +53,34 @@ export function FabricDnaPanel({
         <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-primary" />
         FabricDNA scores are AI-distilled from verified buyer reviews.
       </p>
+
+      {dna.purchaseComparison && (
+        <div className="rounded-lg border border-primary/25 bg-primary/5 p-3">
+          <div className="flex items-start gap-3">
+            <div className="relative flex h-16 w-20 shrink-0">
+              <img
+                src={dna.purchaseComparison.previousProductImage}
+                alt="Previous purchase"
+                className="absolute left-0 top-0 h-16 w-12 rounded-md border-2 border-card object-cover shadow-sm"
+              />
+              <img
+                src={coverImage}
+                alt="Current item"
+                className="absolute left-7 top-0 z-10 h-16 w-12 rounded-md border-2 border-card object-cover shadow-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <p className="flex items-center gap-1.5 text-[12px] font-bold leading-tight text-foreground">
+                <Scale className="h-3.5 w-3.5 shrink-0 text-primary" />
+                Compared to your {dna.purchaseComparison.previousProduct}
+              </p>
+              <p className="mt-1.5 text-[12px] leading-tight text-muted-foreground">
+                {dna.purchaseComparison.text}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div>
         <p className="mb-2 text-[13px] font-bold text-foreground">

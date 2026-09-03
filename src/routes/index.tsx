@@ -52,7 +52,7 @@ const collections: { label: string; category: Product["category"] }[] = [
 function Wishlist() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const { wishlist, bag, addToBag, sizeDrawerProductId, closeSizeDrawer } = useShop();
+  const { wishlist, bag, addToBag, sizeDrawerProductId, openSizeDrawer, closeSizeDrawer } = useShop();
 
   const items = wishlist
     .map((w) => ({ item: w, product: getProduct(w.productId)!, dna: getFabricDna(w.productId) }))

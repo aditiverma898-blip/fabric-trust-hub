@@ -33,6 +33,8 @@ export type FabricDNA = {
   studioPhotoCount?: number;
   /** per-product fabric metrics, 0-100 */
   fabricStats?: { label: string; value: number }[];
+  /** comparison with a past purchase */
+  purchaseComparison?: { previousProduct: string; text: string; previousProductImage: string };
 };
 
 export type WishlistItem = {
@@ -162,6 +164,11 @@ export const fabricDnaRecords: FabricDNA[] = [
       { label: "Softness", value: 88 },
       { label: "Durability", value: 76 },
     ],
+    purchaseComparison: {
+      previousProduct: "White Trousers (May '25)",
+      text: "This will look great paired with the white trousers you bought in May 2025.",
+      previousProductImage: "https://picsum.photos/seed/trousers/200/300",
+    },
   },
   {
     id: "fdna_2",
@@ -176,6 +183,11 @@ export const fabricDnaRecords: FabricDNA[] = [
       { label: "Softness", value: 84 },
       { label: "Durability", value: 90 },
     ],
+    purchaseComparison: {
+      previousProduct: "Black Denim Jeans (Dec '24)",
+      text: "This pattern perfectly complements the black denim jeans you bought last winter.",
+      previousProductImage: "https://picsum.photos/seed/jeans/200/300",
+    },
   },
   {
     id: "fdna_3",
@@ -190,6 +202,11 @@ export const fabricDnaRecords: FabricDNA[] = [
       { label: "Softness", value: 58 },
       { label: "Durability", value: 96 },
     ],
+    purchaseComparison: {
+      previousProduct: "White Essential T-Shirt (Aug '24)",
+      text: "This jacket is the perfect layering piece over your white essential t-shirt.",
+      previousProductImage: "https://picsum.photos/seed/tshirt/200/300",
+    },
   },
   {
     id: "fdna_4",
@@ -204,6 +221,11 @@ export const fabricDnaRecords: FabricDNA[] = [
       { label: "Softness", value: 90 },
       { label: "Durability", value: 82 },
     ],
+    purchaseComparison: {
+      previousProduct: "Grey Chinos (Oct '25)",
+      text: "This sharp black shirt pairs seamlessly with the grey chinos you bought last month.",
+      previousProductImage: "https://picsum.photos/seed/chinos/200/300",
+    },
   },
 ];
 
