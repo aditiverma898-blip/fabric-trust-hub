@@ -157,36 +157,7 @@ function Wishlist() {
 
 
 
-      <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-md justify-around border-t border-border bg-card py-2">
-        {[
-          { icon: Home, label: "Home" },
-          { icon: Grid2x2, label: "Categories" },
-          { icon: Sparkles, label: "Studio" },
-          { icon: Search, label: "Explore" },
-          { icon: ShoppingBag, label: "Bag", active: true },
-        ].map(({ icon: Icon, label, active }) =>
-          label === "Bag" ? (
-            <Link
-              key={label}
-              to="/bag"
-              className="flex w-16 flex-col items-center gap-0.5 text-[11px] text-primary"
-            >
-              <Icon className="h-5 w-5" />
-              {label}
-            </Link>
-          ) : (
-            <div
-              key={label}
-              className={`flex w-16 flex-col items-center gap-0.5 text-[11px] ${
-                active ? "text-primary" : "text-foreground"
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-              {label}
-            </div>
-          ),
-        )}
-      </nav>
+
       <Compass className="hidden" />
     </div>
   );
