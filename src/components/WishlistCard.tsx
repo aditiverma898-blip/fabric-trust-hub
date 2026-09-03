@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronDown, Share2, ShoppingBag, Sparkles, Star, Trash2 } from "lucide-react";
 import type { FabricDNA, Product } from "@/data/wishlist";
 import { FabricDnaBadge, FabricDnaPanel } from "./FabricDnaPanel";
