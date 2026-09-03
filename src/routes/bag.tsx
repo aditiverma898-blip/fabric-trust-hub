@@ -46,10 +46,10 @@ function BagScreen() {
           </Link>
           <div className="flex-1">
             <p className="flex items-center gap-1 text-[17px] font-bold text-foreground">
-              X8WQ+MGG (825302) <ChevronDown className="h-4 w-4" />
+              Select Delivery Address <ChevronDown className="h-4 w-4" />
             </p>
             <p className="truncate text-[15px] text-muted-foreground">
-              Rd Number 8, Ramnaga…
+              Add an address to see delivery options
             </p>
           </div>
           <Heart className="mt-1 h-5 w-5 text-foreground" />
