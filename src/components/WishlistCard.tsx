@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { ShareSheet } from "./ShareSheet";
 import { ChevronDown, Share2, ShoppingBag, Sparkles, Star, Trash2 } from "lucide-react";
 import type { FabricDNA, Product } from "@/data/wishlist";
 import { FabricDnaBadge, FabricDnaPanel } from "./FabricDnaPanel";
@@ -19,50 +21,36 @@ function Price({ product }: { product: Product }) {
 }
 
 function RowActions({ product }: { product: Product }) {
-  const { removeFromWishlist, showToast, openSizeDrawer } = useShop();
-
-  const handleShare = async () => {
-    const url = `https://www.myntra.com/p/${product.id}`;
-    const data = {
-      title: "Checkout what I found on Myntra!",
-      text: `${product.brand} ${product.name}`,
-      url,
-    };
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share(data);
-        return;
-      } catch {
-        return; // user dismissed the native sheet
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      showToast({ message: "Link Copied", variant: "dark" });
-    } catch {
-      showToast({ message: "Could not copy link", variant: "dark" });
-    }
-  };
+  const { removeFromWishlist, openSizeDrawer } = useShop();
+  const [showShare, setShowShare] = useState(false);
 
   return (
-    <div className="grid grid-cols-3 divide-x divide-border border-t border-border">
-      <button
-        aria-label={`Remove ${product.name}`}
-        onClick={() => removeFromWishlist(product.id, `${product.brand} ${product.name}`)}
-        className="flex justify-center py-2.5"
-      >
-        <Trash2 className="h-[18px] w-[18px] text-foreground" />
-      </button>
-      <button
-        onClick={() => openSizeDrawer(product.id)}
-        className="flex items-center justify-center gap-1.5 py-2.5 text-[14px] font-bold text-primary"
-      >
-        <ShoppingBag className="h-[18px] w-[18px]" /> Add
-      </button>
-      <button aria-label={`Share ${product.name}`} onClick={handleShare} className="flex justify-center py-2.5">
-        <Share2 className="h-[18px] w-[18px] text-foreground" />
-      </button>
-    </div>
+    <>
+      <div className="grid grid-cols-3 divide-x divide-border border-t border-border">
+        <button
+          aria-label={`Remove ${product.name}`}
+          onClick={() => removeFromWishlist(product.id, `${product.brand} ${product.name}`)}
+          className="flex justify-center py-2.5"
+        >
+          <Trash2 className="h-[18px] w-[18px] text-foreground" />
+        </button>
+        <button
+          onClick={() => openSizeDrawer(product.id)}
+          className="flex items-center justify-center gap-1.5 py-2.5 text-[14px] font-bold text-primary"
+        >
+          <ShoppingBag className="h-[18px] w-[18px]" /> Add
+        </button>
+        <button aria-label={`Share ${product.name}`} onClick={() => setShowShare(true)} className="flex justify-center py-2.5">
+          <Share2 className="h-[18px] w-[18px] text-foreground" />
+        </button>
+      </div>
+      <ShareSheet
+        isOpen={showShare}
+        onClose={() => setShowShare(false)}
+        productId={product.id}
+        productName={product.name}
+      />
+    </>
   );
 }
 
@@ -84,13 +72,20 @@ export function WishlistCard({
       <div className="col-span-2 overflow-hidden rounded-xl border border-primary/20 bg-card shadow-sm">
         <div className="relative">
           <FabricDnaBadge />
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            width={768}
-            height={1024}
-            className="h-64 w-full object-cover object-top"
-          />
+          <Link
+            to="/product/$productId"
+            params={{ productId: product.id }}
+            aria-label={`View ${product.brand} ${product.name}`}
+            className="block"
+          >
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              width={768}
+              height={1024}
+              className="h-64 w-full object-cover object-top"
+            />
+          </Link>
         </div>
         <div className="px-3 pb-3 pt-2.5">
           <p className="text-[14px] font-bold text-foreground">{product.brand}</p>

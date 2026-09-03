@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ChevronDown, Heart, HeartOff, Info, Share2, Trash2, Truck, Undo2, X, ArrowLeft } from "lucide-react";
 import { useShop } from "@/context/ShopContext";
 import { getProduct, recommendations } from "@/data/wishlist";
+import { useState } from "react";
+import { ShareSheet } from "@/components/ShareSheet";
 
 export const Route = createFileRoute("/bag")({
   head: () => ({
@@ -26,6 +28,7 @@ export const Route = createFileRoute("/bag")({
 
 function BagScreen() {
   const { bag, removeFromBag, updateBagItem, showToast } = useShop();
+  const [showShare, setShowShare] = useState(false);
 
   const rows = bag
     .map((b) => ({ bagItem: b, product: getProduct(b.productId) }))
@@ -45,12 +48,7 @@ function BagScreen() {
             <ArrowLeft className="h-5 w-5 text-foreground" />
           </Link>
           <div className="flex-1">
-            <p className="flex items-center gap-1 text-[17px] font-bold text-foreground">
-              Select Delivery Address <ChevronDown className="h-4 w-4" />
-            </p>
-            <p className="truncate text-[15px] text-muted-foreground">
-              Add an address to see delivery options
-            </p>
+            <p className="text-[17px] font-bold text-foreground">Bag</p>
           </div>
           <Heart className="mt-1 h-5 w-5 text-foreground" />
         </div>
@@ -74,7 +72,9 @@ function BagScreen() {
             {selected.length}/{rows.length} Items Selected{" "}
             <span className="text-primary">(₹{total.toLocaleString("en-IN")})</span>
           </p>
-          <Share2 className="h-[18px] w-[18px] text-foreground" />
+          <button onClick={() => setShowShare(true)}>
+            <Share2 className="h-[18px] w-[18px] text-foreground" />
+          </button>
           <Trash2 className="h-[18px] w-[18px] text-foreground" />
           <HeartOff className="h-[18px] w-[18px] text-foreground" />
         </div>
@@ -241,6 +241,15 @@ function BagScreen() {
           </button>
         </div>
       </div>
+      
+      {selected.length > 0 && (
+        <ShareSheet
+          isOpen={showShare}
+          onClose={() => setShowShare(false)}
+          productId={selected[0].product!.id}
+          productName={selected[0].product!.name}
+        />
+      )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronDown, Heart, Share2, ShoppingBag, Sparkles } from "lu
 import { getFabricDna, getProduct } from "@/data/wishlist";
 import { FabricDnaPanel } from "@/components/FabricDnaPanel";
 import { SizeDrawer } from "@/components/SizeDrawer";
+import { ShareSheet } from "@/components/ShareSheet";
 import { useShop } from "@/context/ShopContext";
 
 export const Route = createFileRoute("/product/$productId")({
@@ -45,24 +46,7 @@ function ProductDetails() {
   const bagCount = bag.reduce((n, b) => n + b.qty, 0);
   const drawerProduct = sizeDrawerProductId ? getProduct(sizeDrawerProductId) : undefined;
 
-  const handleShare = async () => {
-    const url = `https://www.myntra.com/p/${product.id}`;
-    const data = { title: "Checkout what I found on Myntra!", text: `${product.brand} ${product.name}`, url };
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share(data);
-        return;
-      } catch {
-        return;
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      showToast({ message: "Link Copied", variant: "dark" });
-    } catch {
-      showToast({ message: "Could not copy link", variant: "dark" });
-    }
-  };
+  const [showShare, setShowShare] = useState(false);
 
   return (
     <div className="mx-auto min-h-screen max-w-md bg-background pb-24 font-sans">
@@ -71,7 +55,7 @@ function ProductDetails() {
           <ArrowLeft className="h-5 w-5 text-foreground" />
         </Link>
         <p className="flex-1 truncate text-[15px] font-bold text-foreground">{product.brand}</p>
-        <button aria-label="Share product" onClick={handleShare}>
+        <button aria-label="Share product" onClick={() => setShowShare(true)}>
           <Share2 className="h-5 w-5 text-foreground" />
         </button>
         <Link to="/bag" aria-label="Open bag" className="relative">
@@ -120,7 +104,7 @@ function ProductDetails() {
             <FabricDnaPanel
               dna={dna}
               coverImage={product.imageUrl}
-              onMoveToBag={() => addToBag(product.id, product.sizes[1] ?? product.sizes[0]!)}
+              onMoveToBag={() => openSizeDrawer(product.id)}
             />
           ) : null}
         </section>
@@ -128,7 +112,7 @@ function ProductDetails() {
 
       <div className="fixed inset-x-0 bottom-0 z-30 mx-auto flex max-w-md gap-3 border-t border-border bg-card px-4 py-3">
         <button className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-primary py-3 text-[15px] font-bold text-primary">
-          <Heart className="h-[18px] w-[18px]" /> Wishlist
+          <Heart className="h-[18px] w-[18px] fill-primary" /> Wishlist
         </button>
         <button
           onClick={() => openSizeDrawer(product.id)}
@@ -148,6 +132,13 @@ function ProductDetails() {
           }}
         />
       ) : null}
+
+      <ShareSheet
+        isOpen={showShare}
+        onClose={() => setShowShare(false)}
+        productId={product.id}
+        productName={product.name}
+      />
     </div>
   );
 }

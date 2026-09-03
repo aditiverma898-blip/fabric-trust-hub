@@ -51,11 +51,16 @@ const collections: { label: string; category: Product["category"] }[] = [
 
 function Wishlist() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { wishlist, bag, addToBag, sizeDrawerProductId, closeSizeDrawer } = useShop();
 
   const items = wishlist
     .map((w) => ({ item: w, product: getProduct(w.productId)!, dna: getFabricDna(w.productId) }))
     .filter((r) => r.product);
+
+  const filteredItems = activeCategory
+    ? items.filter((i) => i.product.category === activeCategory)
+    : items;
 
   const bagCount = bag.reduce((n, b) => n + b.qty, 0);
   const drawerProduct = sizeDrawerProductId ? getProduct(sizeDrawerProductId) : undefined;
@@ -72,7 +77,7 @@ function Wishlist() {
         </button>
         <div className="flex-1">
           <h1 className="text-[19px] font-bold leading-tight text-foreground">Wishlist</h1>
-          <p className="text-[13px] text-muted-foreground">{items.length} items</p>
+          <p className="text-[13px] text-muted-foreground">{filteredItems.length} items</p>
         </div>
         <ListFilter className="h-5 w-5 text-foreground" />
         <Link to="/bag" aria-label="Open bag" className="relative">
@@ -97,9 +102,18 @@ function Wishlist() {
       <div className="flex gap-5 px-4 pb-3">
         {collections.map((c) => {
           const cover = items.find((i) => i.product.category === c.category)?.product;
+          const isActive = activeCategory === c.category;
           return (
-            <div key={c.label} className="w-16 text-center">
-              <div className="h-16 w-16 overflow-hidden rounded-xl bg-muted">
+            <button
+              key={c.label}
+              onClick={() => setActiveCategory(isActive ? null : c.category)}
+              className="w-16 text-center"
+            >
+              <div
+                className={`h-16 w-16 overflow-hidden rounded-2xl bg-muted transition-all ${
+                  isActive ? "ring-2 ring-primary ring-offset-2" : ""
+                }`}
+              >
                 {cover && (
                   <img
                     src={cover.imageUrl}
@@ -109,21 +123,23 @@ function Wishlist() {
                   />
                 )}
               </div>
-              <p className="mt-1 text-[12px] text-foreground">{c.label}</p>
-            </div>
+              <p className={`mt-1 text-[13px] ${isActive ? "font-bold text-primary" : "text-foreground"}`}>
+                {c.label}
+              </p>
+            </button>
           );
         })}
       </div>
 
       <div className="grid grid-cols-2 gap-3 px-4">
-        {items.map(({ item, product, dna }) => (
+        {filteredItems.map(({ item, product, dna }) => (
           <WishlistCard
             key={item.id}
             product={product}
             dna={dna}
             expanded={expandedId === product.id}
             onToggle={() => setExpandedId(expandedId === product.id ? null : product.id)}
-            onMoveToBag={() => addToBag(product.id, product.sizes[1] ?? product.sizes[0]!)}
+            onMoveToBag={() => openSizeDrawer(product.id)}
           />
         ))}
       </div>

@@ -11,9 +11,7 @@ export function FabricDnaPanel({
   coverImage?: string;
   onMoveToBag: () => void;
 }) {
-  const photos = coverImage
-    ? [coverImage, ...dna.studioImageUrls.slice(0, 4)]
-    : dna.studioImageUrls;
+  const photos = dna.studioImageUrls;
   const [showReel, setShowReel] = useState(false);
   const [added, setAdded] = useState(false);
 

@@ -46,9 +46,9 @@ export function SizeDrawer({
                 key={s}
                 onClick={() => setSize(s)}
                 aria-pressed={active}
-                className={`flex h-14 w-14 items-center justify-center rounded-xl border text-[16px] font-bold transition-colors ${
+                className={`flex h-14 w-14 items-center justify-center rounded-2xl border text-[16px] font-bold transition-all ${
                   active
-                    ? "border-2 border-ring bg-foreground text-card"
+                    ? "border-transparent bg-foreground text-card ring-4 ring-[#DBD0F7]"
                     : "border-border bg-card text-foreground"
                 }`}
               >
@@ -74,7 +74,7 @@ export function SizeDrawer({
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 rounded-lg border border-border bg-card py-3.5 text-[16px] font-bold text-foreground"
+            className="flex-1 rounded-lg border border-foreground bg-card py-3.5 text-[16px] font-bold text-foreground"
           >
             Buy Now
           </button>
