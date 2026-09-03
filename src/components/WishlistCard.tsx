@@ -96,7 +96,7 @@ export function WishlistCard({
           <p className="truncate text-[13px] text-muted-foreground">{product.name}</p>
           <Price product={product} />
         </div>
-        <FabricDnaPanel dna={dna} onMoveToBag={onMoveToBag} />
+        <FabricDnaPanel dna={dna} coverImage={product.imageUrl} onMoveToBag={onMoveToBag} />
         <button
           onClick={onToggle}
           className="flex w-full items-center justify-center gap-1 border-t border-border py-2 text-[12px] font-semibold text-muted-foreground"
@@ -110,14 +110,21 @@ export function WishlistCard({
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
       <div className="relative">
-        <img
-          src={product.imageUrl}
-          alt={product.name}
-          width={768}
-          height={1024}
-          loading="lazy"
-          className="h-56 w-full object-cover object-top"
-        />
+        <Link
+          to="/product/$productId"
+          params={{ productId: product.id }}
+          aria-label={`View ${product.brand} ${product.name}`}
+          className="block"
+        >
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            width={768}
+            height={1024}
+            loading="lazy"
+            className="h-56 w-full object-cover object-top"
+          />
+        </Link>
         {product.rating ? (
           <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-md bg-card px-1.5 py-0.5 text-[12px] font-semibold text-foreground shadow-sm">
             {product.rating} <Star className="h-3 w-3 fill-success text-success" />
